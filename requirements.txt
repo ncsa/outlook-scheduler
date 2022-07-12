@@ -1,3 +1,4 @@
 exchangelib
 tzlocal
 git+https://github.com/andylytical/pyexch
+#git+https://github.com/andylytical/pyexch@shared_cal

@@ -49,6 +49,12 @@ Program is controlled using the following environment variables:
 def run( args ):
     pprint.pprint( ['ARGS', args] )
 
+    # pyexch login
+    px = pyexch.pyexch.PyExch()
+    start = datetime.datetime.now() - datetime.datetime.timedelta( days=2 )
+    events = px.get_events_filtered( start=start )
+    pprint.pprint( events )
+
 if __name__ == '__main__':
     log_lvl = logging.INFO
     args = process_args()
