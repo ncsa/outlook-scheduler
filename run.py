@@ -22,9 +22,11 @@ Program is controlled using the following environment variables:
     }
     parser = argparse.ArgumentParser()
     parser.add_argument( '--debug', action='store_true' )
+    parser.add_argument( '-d', '--days', type='int' )
     parser.add_argument( '-k', '--netrckey',
         help='key in netrc to use for login,passwd; default=%(default)s' )
     defaults = {
+        'days': 7,
         'debug': False,
         'netrckey': 'NETID',
         'passwd': None,
@@ -51,7 +53,7 @@ def run( args ):
 
     # pyexch login
     px = pyexch.pyexch.PyExch()
-    start = datetime.datetime.now() - datetime.timedelta( days=2 )
+    start = datetime.datetime.now() - datetime.timedelta( days=args.days )
     events = px.get_events_filtered( start=start )
     pprint.pprint( events )
 
