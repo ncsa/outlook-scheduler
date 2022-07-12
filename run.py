@@ -19,6 +19,7 @@ Program is controlled using the following environment variables:
         where netrc file has keys "EXCH"
         and the "EXCH" key has values for login, password, account
 '''
+    }
     parser = argparse.ArgumentParser()
     parser.add_argument( '--debug', action='store_true' )
     parser.add_argument( '-k', '--netrckey',
