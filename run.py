@@ -51,7 +51,7 @@ def run( args ):
 
     # pyexch login
     px = pyexch.pyexch.PyExch()
-    start = datetime.datetime.now() - datetime.datetime.timedelta( days=2 )
+    start = datetime.datetime.now() - datetime.timedelta( days=2 )
     events = px.get_events_filtered( start=start )
     pprint.pprint( events )
 
