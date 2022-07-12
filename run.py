@@ -22,7 +22,7 @@ Program is controlled using the following environment variables:
     }
     parser = argparse.ArgumentParser()
     parser.add_argument( '--debug', action='store_true' )
-    parser.add_argument( '-d', '--days', type='int' )
+    parser.add_argument( '-d', '--days', type=int )
     parser.add_argument( '-k', '--netrckey',
         help='key in netrc to use for login,passwd; default=%(default)s' )
     defaults = {
