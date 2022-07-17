@@ -28,7 +28,7 @@ Program is controlled using the following environment variables:
     defaults = {
         'days': 7,
         'debug': False,
-        'netrckey': 'NETID',
+        'netrckey': 'EXCH',
         'passwd': None,
         'user': None,
     }
@@ -53,10 +53,14 @@ def run( args ):
 
     # pyexch login
     px = pyexch.pyexch.PyExch()
+
+    # pyexch read test
     start = datetime.datetime.now() - datetime.timedelta( days=args.days )
-    pprint.pprint( [ 'START', start ] )
     events = px.get_events_filtered( start=start )
     pprint.pprint( events )
+
+    # pyexch write test
+
 
 if __name__ == '__main__':
     log_lvl = logging.INFO
