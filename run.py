@@ -60,6 +60,16 @@ def run( args ):
     pprint.pprint( events )
 
     # pyexch write test
+    # SAMPLE EVENT
+    # SimpleEvent(
+    #   start=EWSDateTime(2022, 7, 11, 0, 0, tzinfo=EWSTimeZone(key='America/Chicago')),
+    #   end=EWSDateTime(2022, 7, 11, 23, 59, 59, tzinfo=EWSTimeZone(key='America/Chicago')),
+    #   elapsed=datetime.timedelta(seconds=86399),
+    #   is_all_day=True,
+    #   type='TRIAGE',
+    #   location='https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1',
+    #   subject='Triage: Rundall, Bouvet'
+    #   )
 
 
 if __name__ == '__main__':
