@@ -61,7 +61,7 @@ def run( args ):
 
     # pyexch write test
     date = datetime.date( 2022, 7, 1 )
-    attendees = [ 'aloftus@illinois.edu' ]
+    attendees = { 'Loftus': 'aloftus@illinois.edu' }
     location='https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
     px.new_triage_event( date=date, attendees=attendees, location=location )
     # SAMPLE EVENT
