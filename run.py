@@ -54,12 +54,16 @@ def run( args ):
     # pyexch login
     px = pyexch.pyexch.PyExch()
 
-    # pyexch read test
-    start = datetime.datetime.now() - datetime.timedelta( days=args.days )
-    events = px.get_events_filtered( start=start )
-    pprint.pprint( events )
+    # # pyexch read test
+    # start = datetime.datetime.now() - datetime.timedelta( days=args.days )
+    # events = px.get_events_filtered( start=start )
+    # pprint.pprint( events )
 
     # pyexch write test
+    date = datetime.date( 2022, 7, 1 )
+    attendees = [ 'aloftus@illinois.edu' ]
+    location='https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1',
+    px.new_triage_event( date=date, attendees=attendees, location=location )
     # SAMPLE EVENT
     # SimpleEvent(
     #   start=EWSDateTime(2022, 7, 11, 0, 0, tzinfo=EWSTimeZone(key='America/Chicago')),
