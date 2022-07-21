@@ -56,7 +56,7 @@ def next_business_day( date ):
     return date + [1, 1, 1, 1, 3, 2, 1][date.weekday()]
 
 
-def new_triage_event( date, attendees, location ):
+def new_triage_event( px, date, attendees, location ):
     names = attendees.keys()
     emails = attendees.values()
     px.new_all_day_event(
@@ -93,7 +93,7 @@ def run( args ):
     date = datetime.date( 2022, 6, 27 )
     attendees = { 'Loftus': 'aloftus@illinois.edu' }
     location='https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
-    new_triage_event( date=date, attendees=attendees, location=location )
+    new_triage_event( px=px, date=date, attendees=attendees, location=location )
     # SAMPLE EVENT
     # SimpleEvent(
     #   start=EWSDateTime(2022, 7, 11, 0, 0, tzinfo=EWSTimeZone(key='America/Chicago')),
