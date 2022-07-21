@@ -72,10 +72,10 @@ def new_triage_event( date, attendees, location ):
     # self.make_or_update_shift_change_event( date=next_date, attendees=attendees, location=location )
 
 
-def make_or_update_shift_change_event( self, date, attendees, location ):
-    emails = attendees.values()
-    existing_event = self.get_shift_change_mtg( date )
-    if existing_event:
+# def make_or_update_shift_change_event( self, date, attendees, location ):
+#     emails = attendees.values()
+#     existing_event = self.get_shift_change_mtg( date )
+#     if existing_event:
 
 
 def run( args ):
