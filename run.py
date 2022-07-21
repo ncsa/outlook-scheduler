@@ -48,6 +48,38 @@ Program is controlled using the following environment variables:
     return args
 
 
+
+def next_business_day( date ):
+    ''' Return the next weekday
+    '''
+    # https://stackoverflow.com/questions/9187215/
+    return date + [1, 1, 1, 1, 3, 2, 1][date.weekday()]
+
+
+def new_triage_event( date, attendees, location ):
+    names = attendees.keys()
+    emails = attendees.values()
+    px.new_all_day_event(
+        date = date, 
+        subject = f"Triage: {','.join(names)}"
+        attendees = emails,
+        location = location,
+        categories = [ 'TicketMaster' ],
+        free = True,
+    )
+    triage_event.save(send_meeting_invitations=exchangelib.items.SEND_TO_ALL_AND_SAVE_COPY)
+    )
+    # self.make_or_update_shift_change_event( date=date, attendees=attendees, location=location )
+    # next_day = self.next_business_day( date=date )
+    # self.make_or_update_shift_change_event( date=next_date, attendees=attendees, location=location )
+
+
+def make_or_update_shift_change_event( self, date, attendees, location ):
+    emails = attendees.values()
+    existing_event = self.get_shift_change_mtg( date )
+    if existing_event:
+
+
 def run( args ):
     pprint.pprint( ['ARGS', args] )
 
@@ -63,7 +95,7 @@ def run( args ):
     date = datetime.date( 2022, 6, 27 )
     attendees = { 'Loftus': 'aloftus@illinois.edu' }
     location='https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
-    px.new_triage_event( date=date, attendees=attendees, location=location )
+    new_triage_event( date=date, attendees=attendees, location=location )
     # SAMPLE EVENT
     # SimpleEvent(
     #   start=EWSDateTime(2022, 7, 11, 0, 0, tzinfo=EWSTimeZone(key='America/Chicago')),
@@ -91,3 +123,4 @@ if __name__ == '__main__':
     for key in no_debug:
         logging.getLogger(key).setLevel(logging.CRITICAL)
     run( args )
+
