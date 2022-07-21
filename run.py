@@ -67,8 +67,6 @@ def new_triage_event( date, attendees, location ):
         categories = [ 'TicketMaster' ],
         free = True,
     )
-    triage_event.save(send_meeting_invitations=exchangelib.items.SEND_TO_ALL_AND_SAVE_COPY)
-    )
     # self.make_or_update_shift_change_event( date=date, attendees=attendees, location=location )
     # next_day = self.next_business_day( date=date )
     # self.make_or_update_shift_change_event( date=next_date, attendees=attendees, location=location )
