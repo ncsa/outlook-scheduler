@@ -61,7 +61,7 @@ def new_triage_event( date, attendees, location ):
     emails = attendees.values()
     px.new_all_day_event(
         date = date, 
-        subject = f"Triage: {','.join(names)}"
+        subject = f"Triage: {','.join(names)}",
         attendees = emails,
         location = location,
         categories = [ 'TicketMaster' ],
