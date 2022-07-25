@@ -99,15 +99,17 @@ def run( args ):
     # pprint.pprint( existing_events )
     # pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
     # create hash of event dates & types
-    current_events = {{}}
+    current_events = {}
     for e in existing_events:
-        dt = datetime.date( e.year, e.month, e.day )
+        dt = datetime.date( e.start.year, e.start.month, e.start.day )
+        if dt not in current_events:
+            current_events[dt] = {}
         typ = e.type
         current_events[dt][typ] = e
     for dt in sorted( current_events.keys() ):
-        for typ, event in current_events[dt].items():
-            subj = e.subject
-            members = e.raw_event_required_attendees
+        for typ, ev in current_events[dt].items():
+            subj = ev.subject
+            members = ev.raw_event_required_attendees
             pprint.pprint( [ dt, typ, subj, members ] )
 
 
