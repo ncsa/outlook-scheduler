@@ -97,7 +97,7 @@ def run( args ):
         end = max( triage_raw_data.keys() ),
     )
     # pprint.pprint( existing_events )
-    # pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
+    pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
     # create hash of event dates & types
     current_events = {}
     for e in existing_events:
@@ -105,6 +105,7 @@ def run( args ):
         if dt not in current_events:
             current_events[dt] = {}
         typ = e.type
+        pprint.pprint( f'found date and type: {dt} . {typ}' )
         current_events[dt][typ] = e
     for dt in sorted( current_events.keys() ):
         for typ, ev in current_events[dt].items():
