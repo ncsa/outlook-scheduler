@@ -89,7 +89,6 @@ def run( args ):
     csv_data = csv.reader( args.infile, dialect='excel-tab' )
     triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
     pprint.pprint( triage_raw_data )
-    # raise SystemExit( 'forced exit' )
 
     # check existing events
     px = pyexch.pyexch.PyExch()
@@ -97,6 +96,12 @@ def run( args ):
         start = min( triage_raw_data.keys() ),
         end = max( triage_raw_data.keys() ),
     )
+    pprint.pprint( existing_events )
+
+
+
+
+    raise SystemExit( 'forced exit' )
 
 
     # # pyexch read test
