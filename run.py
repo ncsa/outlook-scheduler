@@ -34,7 +34,7 @@ Program is controlled using the following environment variables:
     #     help='key in netrc to use for login,passwd; default=%(default)s' )
     defaults = {
         'debug': False,
-        'csv': '-',
+        'infile': '-',
     }
     parser.set_defaults( **defaults )
     args = parser.parse_args()
