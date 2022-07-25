@@ -96,10 +96,19 @@ def run( args ):
         start = min( triage_raw_data.keys() ),
         end = max( triage_raw_data.keys() ),
     )
-    pprint.pprint( existing_events )
+    # pprint.pprint( existing_events )
     # pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
     # create hash of event dates & types
-
+    current_events = {{}}
+    for e in existing_events:
+        dt = datetime.date( e.year, e.month, e.day )
+        typ = e.type
+        current_events[dt][typ] = e
+    for dt in sorted( current_events.keys() ):
+        for typ, event in current_events[dt].items():
+            subj = e.subject
+            members = e.raw_event_required_attendees
+            pprint.pprint( [ dt, typ, subj, members ] )
 
 
 
