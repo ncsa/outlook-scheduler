@@ -96,7 +96,7 @@ def run( args ):
         start = min( triage_raw_data.keys() ),
         end = max( triage_raw_data.keys() ),
     )
-    pprint.pprint( existing_events )
+    pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
 
 
 
