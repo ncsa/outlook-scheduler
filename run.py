@@ -1,6 +1,7 @@
 #!/bin/env python3
 
 import argparse
+import csv
 import datetime
 import logging
 import netrc
@@ -11,40 +12,42 @@ import pyexch.pyexch
 def process_args():
     constructor_args = {
         'formatter_class': argparse.RawDescriptionHelpFormatter,
-        'description': 'outlook scheduler',
+        'description': 'triage duty scheduler',
         'epilog': '''
 Program is controlled using the following environment variables:
     NETRC
         path to netrc file (default: ~/.netrc)
-        where netrc file has keys "EXCH"
-        and the "EXCH" key has values for login, password, account
+        where netrc file has a key named "EXCH"
+        and the "EXCH" key has values for:
+        "login" in format username@illinois.edu
+        "password",
+        "account" in format username@illinois.edu
+        NOTE that account can be different than login,
+        which is how to access a shared calendar.
 '''
     }
     parser = argparse.ArgumentParser()
-    parser.add_argument( '--debug', action='store_true' )
-    parser.add_argument( '-d', '--days', type=int )
-    parser.add_argument( '-k', '--netrckey',
-        help='key in netrc to use for login,passwd; default=%(default)s' )
+    parser.add_argument( '-d', '--debug', action='store_true' )
+    parser.add_argument( '-f', '--infile', type=argparse.FileType() )
+    # parser.add_argument( '-k', '--netrckey',
+    #     help='key in netrc to use for login,passwd; default=%(default)s' )
     defaults = {
-        'days': 7,
         'debug': False,
-        'netrckey': 'EXCH',
-        'passwd': None,
-        'user': None,
+        'csv': '-',
     }
     parser.set_defaults( **defaults )
     args = parser.parse_args()
-    # Load login and passwd from netrc
-    netrc_fn = os.getenv( 'NETRC' )
-    nrc = netrc.netrc( netrc_fn )
-    nrc_parts = nrc.authenticators( args.netrckey )
-    if nrc_parts:
-        args.user = nrc_parts[0]
-        args.passwd = nrc_parts[2]
-    if not args.user:
-        raise UserWarning( 'Empty username not allowed' )
-    if not args.passwd:
-        raise UserWarning( 'Empty passwd not allowed' )
+    # # Load login and passwd from netrc
+    # netrc_fn = os.getenv( 'NETRC' )
+    # nrc = netrc.netrc( netrc_fn )
+    # nrc_parts = nrc.authenticators( args.netrckey )
+    # if nrc_parts:
+    #     args.user = nrc_parts[0]
+    #     args.passwd = nrc_parts[2]
+    # if not args.user:
+    #     raise UserWarning( 'Empty username not allowed' )
+    # if not args.passwd:
+    #     raise UserWarning( 'Empty passwd not allowed' )
     return args
 
 
@@ -83,6 +86,12 @@ def run( args ):
 
     # pyexch login
     px = pyexch.pyexch.PyExch()
+
+    # get CSV input
+    csv_data = csv.reader( args.infile )
+    triage_raw_data = { row[0]:row[1:] for row in csv_data }
+    pprint.pprint( triage_raw_data )
+    raise SystemExit( 'forced exit' )
 
     # # pyexch read test
     # start = datetime.datetime.now() - datetime.timedelta( days=args.days )

@@ -1,4 +1,4 @@
 exchangelib
 tzlocal
-#git+https://github.com/andylytical/pyexch
-git+https://github.com/andylytical/pyexch@write_events
+git+https://github.com/andylytical/pyexch
+#git+https://github.com/andylytical/pyexch@write_events
