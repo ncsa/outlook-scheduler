@@ -1,4 +1,5 @@
 exchangelib
 tzlocal
+python-dateutil
 git+https://github.com/andylytical/pyexch
 #git+https://github.com/andylytical/pyexch@write_events

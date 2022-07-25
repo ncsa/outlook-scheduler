@@ -3,6 +3,7 @@
 import argparse
 import csv
 import datetime
+import dateutil.parser
 import logging
 import netrc
 import os
@@ -89,7 +90,7 @@ def run( args ):
 
     # get CSV input
     csv_data = csv.reader( args.infile, dialect='excel-tab' )
-    triage_raw_data = { row[0]:row[1:] for row in csv_data }
+    triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
     pprint.pprint( triage_raw_data )
     raise SystemExit( 'forced exit' )
 
