@@ -90,13 +90,18 @@ def run( args ):
     triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
     pprint.pprint( triage_raw_data )
 
-    # check existing events
+    # get existing events
     px = pyexch.pyexch.PyExch()
     existing_events = px.get_events_filtered(
         start = min( triage_raw_data.keys() ),
         end = max( triage_raw_data.keys() ),
     )
-    pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
+    pprint.pprint( existing_events )
+    # pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
+    # create hash of event dates & types
+
+
+
 
 
 
