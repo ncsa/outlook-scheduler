@@ -85,14 +85,19 @@ def new_triage_event( px, date, attendees, location ):
 def run( args ):
     pprint.pprint( ['ARGS', args] )
 
-    # pyexch login
-    px = pyexch.pyexch.PyExch()
-
     # get CSV input
     csv_data = csv.reader( args.infile, dialect='excel-tab' )
     triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
     pprint.pprint( triage_raw_data )
-    raise SystemExit( 'forced exit' )
+    # raise SystemExit( 'forced exit' )
+
+    # check existing events
+    px = pyexch.pyexch.PyExch()
+    existing_events = px.get_events_filtered(
+        start = min( triage_raw_data.keys() ),
+        end = max( triage_raw_data.keys() ),
+    )
+
 
     # # pyexch read test
     # start = datetime.datetime.now() - datetime.timedelta( days=args.days )
