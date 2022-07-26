@@ -95,7 +95,7 @@ def run( args ):
     
     existing_events = px.get_events_filtered(
         start = min( triage_raw_data.keys() ),
-        end = max( triage_raw_data.keys() ) + datetime.timedelta( secs=86399 ),
+        end = max( triage_raw_data.keys() ) + datetime.timedelta( seconds=86399 ),
     )
     # pprint.pprint( existing_events )
     pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
