@@ -105,11 +105,11 @@ def new_triage_event( px, date, attendees, location ):
 
 
 def create_or_update_TRIAGE_event():
-    echo 'create_or_update_TRIAGE_event'
+    print( 'create_or_update_TRIAGE_event' )
 
 
 def create_or_update_SHIFTCHANGE_event():
-    echo 'create_or_update_SHIFTCHANGE_event'
+    print( 'create_or_update_SHIFTCHANGE_event')
 
 
 def run( args ):
