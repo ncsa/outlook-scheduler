@@ -52,6 +52,28 @@ Program is controlled using the following environment variables:
     return args
 
 
+def get_existing_events( px, start, end ):
+    ''' px = PyExch instance, already logged in
+        start = datetime.date OR datetime.datetime
+        end = datetime.date OR datetime.datetime
+        Get existing events between "start" and "end"
+    '''
+    # convert end to a datetime at the end of the day 11:59:59 PM
+    existing_events = px.get_events_filtered(
+        start = start,
+        end = end + datetime.timedelta( seconds=86399 ),
+    )
+    # pprint.pprint( existing_events )
+    # pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
+    # create hash of event dates & types
+    current_events = {}
+    for e in existing_events:
+        dt = datetime.date( e.start.year, e.start.month, e.start.day )
+        if dt not in current_events:
+            current_events[dt] = {}
+        current_events[dt][e.type] = e
+    return current_events
+
 
 def next_business_day( date ):
     ''' Return the next weekday
@@ -88,32 +110,31 @@ def run( args ):
     # get CSV input
     csv_data = csv.reader( args.infile, dialect='excel-tab' )
     triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
-    pprint.pprint( triage_raw_data )
+    # pprint.pprint( triage_raw_data )
 
-    # get existing events
-    px = pyexch.pyexch.PyExch()
-    
-    existing_events = px.get_events_filtered(
+    # get existing events as dict[date][type]
+    regex_map = {
+        "TRIAGE":"^Triage: ",
+        "SHIFTCHANGE":"^Triage Shift Change: ",
+        }
+    px = pyexch.pyexch.PyExch( regex_map = regex_map )
+    existing_events = get_existing_events(
         start = min( triage_raw_data.keys() ),
-        end = max( triage_raw_data.keys() ) + datetime.timedelta( seconds=86399 ),
+        end = max( triage_raw_data.keys() ),
     )
-    # pprint.pprint( existing_events )
-    pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
-    # create hash of event dates & types
-    current_events = {}
-    for e in existing_events:
-        dt = datetime.datetime( e.start.year, e.start.month, e.start.day )
-        if dt not in current_events:
-            current_events[dt] = {}
-        typ = e.type
-        pprint.pprint( f'found date and type: {dt} . {typ}' )
-        current_events[dt][typ] = e
-    for dt in sorted( current_events.keys() ):
-        for typ, ev in current_events[dt].items():
-            subj = ev.subject
-            members = [ x.mailbox.email_address for x in ev.raw_event.required_attendees ]
-            pprint.pprint( [ dt, typ, subj, members ] )
 
+    # attempt to create triage meetings
+    for dt, members in triage_raw_data.items():
+        for typ in regex_map.keys():
+            existing_event = None
+            existing_event = existing_events[dt][typ]
+
+    # for dt in sorted( current_events.keys() ):
+    #     for typ, ev in current_events[dt].items():
+    #         subj = ev.subject
+    #         members = [ x.mailbox.email_address for x in ev.raw_event.required_attendees ]
+    #         pprint.pprint( [ dt, typ, subj, members ] )
+    
 
 
 
