@@ -92,16 +92,17 @@ def run( args ):
 
     # get existing events
     px = pyexch.pyexch.PyExch()
+    
     existing_events = px.get_events_filtered(
         start = min( triage_raw_data.keys() ),
-        end = max( triage_raw_data.keys() ),
+        end = max( triage_raw_data.keys() ) + datetime.timedelta( secs=86399 ),
     )
     # pprint.pprint( existing_events )
     pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
     # create hash of event dates & types
     current_events = {}
     for e in existing_events:
-        dt = datetime.date( e.start.year, e.start.month, e.start.day )
+        dt = datetime.datetime( e.start.year, e.start.month, e.start.day )
         if dt not in current_events:
             current_events[dt] = {}
         typ = e.type
