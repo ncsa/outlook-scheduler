@@ -119,9 +119,16 @@ def run( args ):
         }
     px = pyexch.pyexch.PyExch( regex_map = regex_map )
     existing_events = get_existing_events(
+        px,
         start = min( triage_raw_data.keys() ),
         end = max( triage_raw_data.keys() ),
     )
+
+    for dt in sorted( current_events.keys() ):
+        for typ, ev in current_events[dt].items():
+            subj = ev.subject
+            members = [ x.mailbox.email_address for x in ev.raw_event.required_attendees ]
+            pprint.pprint( [ dt, typ, subj, members ] )
 
     # attempt to create triage meetings
     for dt, members in triage_raw_data.items():
@@ -129,11 +136,6 @@ def run( args ):
             existing_event = None
             existing_event = existing_events[dt][typ]
 
-    # for dt in sorted( current_events.keys() ):
-    #     for typ, ev in current_events[dt].items():
-    #         subj = ev.subject
-    #         members = [ x.mailbox.email_address for x in ev.raw_event.required_attendees ]
-    #         pprint.pprint( [ dt, typ, subj, members ] )
     
 
 
