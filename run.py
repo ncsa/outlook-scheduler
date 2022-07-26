@@ -104,6 +104,14 @@ def new_triage_event( px, date, attendees, location ):
 #     if existing_event:
 
 
+def create_or_update_TRIAGE_event():
+    echo 'create_or_update_TRIAGE_event'
+
+
+def create_or_update_SHIFTCHANGE_event():
+    echo 'create_or_update_SHIFTCHANGE_event'
+
+
 def run( args ):
     pprint.pprint( ['ARGS', args] )
 
@@ -133,8 +141,12 @@ def run( args ):
     # attempt to create triage meetings
     for dt, members in triage_raw_data.items():
         for typ in regex_map.keys():
-            existing_event = None
-            existing_event = existing_events[dt][typ]
+            try:
+                existing_event = existing_events[dt][typ]
+            except KeyError:
+                existing_event = None
+            func = getattr( __main__, f'create_or_update_{typ}_event' )
+            func()
 
     
 
