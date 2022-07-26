@@ -124,7 +124,7 @@ def run( args ):
         end = max( triage_raw_data.keys() ),
     )
 
-    for dt in sorted( current_events.keys() ):
+    for dt in sorted( existing_events.keys() ):
         for typ, ev in current_events[dt].items():
             subj = ev.subject
             members = [ x.mailbox.email_address for x in ev.raw_event.required_attendees ]
