@@ -111,7 +111,7 @@ def run( args ):
     for dt in sorted( current_events.keys() ):
         for typ, ev in current_events[dt].items():
             subj = ev.subject
-            members = ev.raw_event.required_attendees
+            members = [ x.email_address for x in ev.raw_event.required_attendees ]
             pprint.pprint( [ dt, typ, subj, members ] )
 
 
