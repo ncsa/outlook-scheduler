@@ -146,7 +146,7 @@ def run( args ):
             except KeyError:
                 existing_event = None
             fname = f'create_or_update_{typ}_event'
-            locals()[fname]()
+            globals()[fname]()
 
     
 
