@@ -145,8 +145,8 @@ def run( args ):
                 existing_event = existing_events[dt][typ]
             except KeyError:
                 existing_event = None
-            func = getattr( __main__, f'create_or_update_{typ}_event' )
-            func()
+            fname = f'create_or_update_{typ}_event'
+            locals()[fname]()
 
     
 
