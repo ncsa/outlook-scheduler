@@ -12,10 +12,7 @@ import pprint
 import pyexch.pyexch
 
 # Hash to hold module level data
-resources = {
-    triage_location = 'https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
-    triage_categories = [ 'TicketMaster' ],
-}
+resources = {}
 
 def get_args():
     if 'args' not in resources:
@@ -92,10 +89,14 @@ def get_existing_events( start, end ):
 
 
 def get_triage_location():
+    if 'triage_location' not in resources:
+        resources['triage_location'] = 'https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
     return resources['triage_location']
 
 
 def get_triage_categories():
+    if 'triage_categories' not in resources:
+        resources['triage_categories'] = [ 'TicketMaster' ],
     return resources['triage_categories']
 
 
