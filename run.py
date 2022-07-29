@@ -91,7 +91,7 @@ def get_triage_location():
 
 def get_triage_categories():
     if 'triage_categories' not in resources:
-        resources['triage_categories'] = [ 'TicketMaster' ],
+        resources['triage_categories'] = [ 'TicketMaster' ]
     return resources['triage_categories']
 
 
