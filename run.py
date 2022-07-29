@@ -91,7 +91,7 @@ def get_existing_events( start, end ):
     current_events = {}
     for e in existing_events:
         #dt = datetime.date( e.start.year, e.start.month, e.start.day )
-        dt = e.date()
+        dt = e.start.date()
         if dt not in current_events:
             current_events[dt] = {}
         current_events[dt][e.type] = e
