@@ -132,7 +132,8 @@ def run():
 
     # get CSV input
     csv_data = csv.reader( args.infile, dialect='excel-tab' )
-    triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
+    triage_raw_data = {
+        dateutil.parser.parse(row[0]).date():row[1:] for row in csv_data }
     # pprint.pprint( triage_raw_data )
 
     # for dt in sorted( existing_events.keys() ):
