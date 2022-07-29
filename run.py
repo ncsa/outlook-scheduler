@@ -46,17 +46,31 @@ def get_args():
         resources['args'] = args
     return resources['args']
 
+
 def get_regex_map():
     return {
         "TRIAGE":"^Triage: ",
         "SHIFTCHANGE":"^Triage Shift Change: ",
         }
 
+
 def get_pyexch():
     if 'pyexch' not in resources:
         regex_map = get_regex_map()
         resources['pyexch'] = pyexch.pyexch.PyExch( regex_map = regex_map )
     return resources['pyexch']
+
+
+def get_triage_location():
+    if 'triage_location' not in resources:
+        resources['triage_location'] = 'https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
+    return resources['triage_location']
+
+
+def get_triage_categories():
+    if 'triage_categories' not in resources:
+        resources['triage_categories'] = [ 'TicketMaster' ]
+    return resources['triage_categories']
 
 
 def get_existing_events( start, end ):
@@ -81,18 +95,6 @@ def get_existing_events( start, end ):
             current_events[dt] = {}
         current_events[dt][e.type] = e
     return current_events
-
-
-def get_triage_location():
-    if 'triage_location' not in resources:
-        resources['triage_location'] = 'https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1'
-    return resources['triage_location']
-
-
-def get_triage_categories():
-    if 'triage_categories' not in resources:
-        resources['triage_categories'] = [ 'TicketMaster' ]
-    return resources['triage_categories']
 
 
 def next_business_day( date ):
