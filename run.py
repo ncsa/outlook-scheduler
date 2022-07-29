@@ -148,12 +148,17 @@ def run():
         start = triage_start_date,
         end = triage_end_date,
     )
+
+    pprint.pprint( existing_events.keys() )
+    pprint.pprint( trage_raw_data.keys() )
+    raise SystemExit( 'forced exit' )
+
     for dt, members in triage_raw_data.items():
         try:
             ev = existing_events[dt]['TRIAGE']
         except KeyError:
             ev = None
-        create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
+        #create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
 
     # # (2) create / update SHIFTCHANGE events
     # existing_events = get_existing_events(
@@ -172,28 +177,6 @@ def run():
     #         date=dt, attendees=attendees, existing_event=shiftchange_ev )
 
 
-    raise SystemExit( 'forced exit' )
-
-
-    # # pyexch read test
-    # start = datetime.datetime.now() - datetime.timedelta( days=args.days )
-    # events = px.get_events_filtered( start=start )
-    # pprint.pprint( events )
-
-    # pyexch write test
-    date = datetime.date( 2022, 6, 27 )
-    attendees = { 'Loftus': 'aloftus@illinois.edu' }
-    new_triage_event( px=px, date=date, attendees=attendees, location=location )
-    # SAMPLE EVENT
-    # SimpleEvent(
-    #   start=EWSDateTime(2022, 7, 11, 0, 0, tzinfo=EWSTimeZone(key='America/Chicago')),
-    #   end=EWSDateTime(2022, 7, 11, 23, 59, 59, tzinfo=EWSTimeZone(key='America/Chicago')),
-    #   elapsed=datetime.timedelta(seconds=86399),
-    #   is_all_day=True,
-    #   type='TRIAGE',
-    #   location='https://illinois.zoom.us/j/87390897249?pwd=JZ8_SzMfvWmFMJp2hSizNx2vxQm4ZC.1',
-    #   subject='Triage: Rundall, Bouvet'
-    #   )
 
 
 if __name__ == '__main__':
