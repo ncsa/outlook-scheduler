@@ -34,7 +34,6 @@ def get_args():
         }
         parser = argparse.ArgumentParser()
         parser.add_argument( '-d', '--debug', action='store_true' )
-        parser.add_argument( '-v', '--verbose', action='store_true' )
         parser.add_argument( '-f', '--infile', type=argparse.FileType() )
         # parser.add_argument( '-k', '--netrckey',
         #     help='key in netrc to use for login,passwd; default=%(default)s' )
@@ -45,10 +44,6 @@ def get_args():
         parser.set_defaults( **defaults )
         args = parser.parse_args()
         resources['args'] = args
-	if args.verbose:
-            logger.setLevel( logging.INFO )
-        if args.debug:
-            logger.setLevel( logging.DEBUG )
     return resources['args']
 
 def get_regex_map():
