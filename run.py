@@ -90,7 +90,8 @@ def get_existing_events( start, end ):
     # create hash of event dates & types
     current_events = {}
     for e in existing_events:
-        dt = datetime.date( e.start.year, e.start.month, e.start.day )
+        #dt = datetime.date( e.start.year, e.start.month, e.start.day )
+        dt = e.date()
         if dt not in current_events:
             current_events[dt] = {}
         current_events[dt][e.type] = e
@@ -132,8 +133,7 @@ def run():
 
     # get CSV input
     csv_data = csv.reader( args.infile, dialect='excel-tab' )
-    triage_raw_data = {
-        dateutil.parser.parse(row[0]).date():row[1:] for row in csv_data }
+    triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
     # pprint.pprint( triage_raw_data )
 
     # for dt in sorted( existing_events.keys() ):
@@ -155,7 +155,7 @@ def run():
     event_dates = [ k for k in existing_events.keys() ]
     pprint.pprint( event_dates )
     for i in range( len( triage_dates ) ):
-        td = triage_dates[i]
+        td = triage_dates[i].date()
         ed = event_dates[i]
         if td == ed:
             logging.info( f'EQUAL {td} == {ed}' )
