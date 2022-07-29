@@ -150,7 +150,7 @@ def run():
     )
 
     pprint.pprint( existing_events.keys() )
-    pprint.pprint( trage_raw_data.keys() )
+    pprint.pprint( triage_raw_data.keys() )
     raise SystemExit( 'forced exit' )
 
     for dt, members in triage_raw_data.items():
