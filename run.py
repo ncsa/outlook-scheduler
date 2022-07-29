@@ -113,6 +113,7 @@ def create_or_update_triage_event( date, attendees, existing_event:None):
     if existing_event:
         #logging.info( f'Existing TRIAGE event {pprint.pprint(ev)}' )
         logging.info( f'Existing TRIAGE event for date "{date}"' )
+        logging.debug( f'Existing Event: {pprint.pformat(existing_event)}' )
     else:
         px = get_pyexch()
         logging.info( f'Making new TRIAGE event for date "{date}"' )
