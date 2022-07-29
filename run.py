@@ -149,8 +149,20 @@ def run():
         end = triage_end_date,
     )
 
-    pprint.pprint( existing_events.keys() )
-    pprint.pprint( triage_raw_data.keys() )
+    triage_dates = triage_raw_data.keys()
+    pprint.pprint( triage_dates )
+    event_dates = existing_events.keys()
+    pprint.pprint( event_dates )
+    for i in range( len( triage_dates ) ):
+        td = triage_dates[i]
+        ed = event_dates[i]
+        if td == ed:
+            logging.info( f'EQUAL {td} == {ed}' )
+        elif td < ed:
+            logging.info( f'LESS {td} < {ed}' )
+        elif td > ed:
+            logging.info( f'GREATER {td} > {ed}' )
+
     raise SystemExit( 'forced exit' )
 
     for dt, members in triage_raw_data.items():
