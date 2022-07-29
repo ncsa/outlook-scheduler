@@ -149,9 +149,9 @@ def run():
         end = triage_end_date,
     )
 
-    triage_dates = triage_raw_data.keys()
+    triage_dates = [ k for k in triage_raw_data.keys() ]
     pprint.pprint( triage_dates )
-    event_dates = existing_events.keys()
+    event_dates = [ k for k in existing_events.keys() ]
     pprint.pprint( event_dates )
     for i in range( len( triage_dates ) ):
         td = triage_dates[i]
