@@ -150,27 +150,29 @@ def run():
         end = triage_end_date,
     )
 
-    triage_dates = [ k for k in triage_raw_data.keys() ]
-    pprint.pprint( triage_dates )
-    event_dates = [ k for k in existing_events.keys() ]
-    pprint.pprint( event_dates )
-    for i in range( len( triage_dates ) ):
-        td = triage_dates[i].date()
-        ed = event_dates[i]
-        if td == ed:
-            logging.info( f'EQUAL {td} == {ed}' )
-        elif td < ed:
-            logging.info( f'LESS {td} < {ed}' )
-        elif td > ed:
-            logging.info( f'GREATER {td} > {ed}' )
+    # triage_dates = [ k for k in triage_raw_data.keys() ]
+    # pprint.pprint( triage_dates )
+    # event_dates = [ k for k in existing_events.keys() ]
+    # pprint.pprint( event_dates )
+    # for i in range( len( triage_dates ) ):
+    #     td = triage_dates[i].date()
+    #     ed = event_dates[i]
+    #     if td == ed:
+    #         logging.info( f'EQUAL {td} == {ed}' )
+    #     elif td < ed:
+    #         logging.info( f'LESS {td} < {ed}' )
+    #     elif td > ed:
+    #         logging.info( f'GREATER {td} > {ed}' )
 
-    raise SystemExit( 'forced exit' )
+    # raise SystemExit( 'forced exit' )
 
     for dt, members in triage_raw_data.items():
         try:
-            ev = existing_events[dt]['TRIAGE']
+            ev = existing_events[dt.date()]['TRIAGE']
+            logging.info( f'found existing event matching date "{dt}"' )
         except KeyError:
             ev = None
+            logging.info( f'No existing event for date "{dt}"' )
         #create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
 
     # # (2) create / update SHIFTCHANGE events
