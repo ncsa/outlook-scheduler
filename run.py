@@ -173,7 +173,7 @@ def run():
         except KeyError:
             ev = None
             logging.info( f'No existing event for date "{dt}"' )
-        #create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
+        create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
 
     # # (2) create / update SHIFTCHANGE events
     # existing_events = get_existing_events(
