@@ -169,10 +169,8 @@ def run():
     for dt, members in triage_raw_data.items():
         try:
             ev = existing_events[dt.date()]['TRIAGE']
-            logging.info( f'found existing event matching date "{dt}"' )
         except KeyError:
             ev = None
-            logging.info( f'No existing event for date "{dt}"' )
         create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
 
     # # (2) create / update SHIFTCHANGE events
