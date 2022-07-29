@@ -113,7 +113,7 @@ def create_or_update_TRIAGE_event( date, attendees, existing_event=None):
         px = get_pyexch()
         px.new_all_day_event( 
             date = date, 
-            subject = f"Triage: {','.join(names)}",
+            subject = f"Triage: {','.join(attendees)}",
             attendees = attendees,
             location = get_triage_location(),
             categories = get_triage_categories(),
