@@ -145,7 +145,7 @@ def run():
                 emails.append( elem )
             else:
                 members.append( elem )
-        triage_raw_data[date] = { emails: emails, members: members }
+        triage_raw_data[date] = { 'emails': emails, 'members': members }
     # pprint.pprint( triage_raw_data )
 
     # for dt in sorted( existing_events.keys() ):
