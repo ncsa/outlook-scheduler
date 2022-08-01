@@ -168,11 +168,12 @@ def run():
     # raise SystemExit( 'forced exit' )
 
     for dt, members in triage_raw_data.items():
+        emails = [ f'{netid}@illinois.edu' for netid in members ]
         try:
             ev = existing_events[dt.date()]['TRIAGE']
         except KeyError:
             ev = None
-        create_or_update_triage_event( date=dt, attendees=members, existing_event=ev)
+        create_or_update_triage_event( date=dt, attendees=emails, existing_event=ev)
 
     # # (2) create / update SHIFTCHANGE events
     # existing_events = get_existing_events(
