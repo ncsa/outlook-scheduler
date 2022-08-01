@@ -186,8 +186,8 @@ def run():
             ev = None
         create_or_update_triage_event(
             date=dt,
-            emails=data[dt][emails],
-            members=data[dt][members],
+            emails=data[emails],
+            members=data[members],
             existing_event=ev
         )
 
