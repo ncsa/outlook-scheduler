@@ -185,10 +185,10 @@ def run():
         except KeyError:
             ev = None
         create_or_update_triage_event(
-            date=dt,
-            emails=data[emails],
-            members=data[members],
-            existing_event=ev
+            date = dt,
+            emails = data['emails'],
+            members = data['members'],
+            existing_event = ev
         )
 
     # # (2) create / update SHIFTCHANGE events
