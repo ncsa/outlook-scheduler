@@ -79,6 +79,7 @@ def get_existing_events( start, end ):
         end = datetime.date OR datetime.datetime
         Get existing events between "start" and "end"
     '''
+    logging.debug( pprint.pformat( [ start, end ] ) )
     px = get_pyexch()
     # convert end to a datetime at the end of the day 11:59:59 PM
     existing_events = px.get_events_filtered(
@@ -146,7 +147,7 @@ def run():
             else:
                 members.append( elem )
         triage_raw_data[date] = { 'emails': emails, 'members': members }
-    # pprint.pprint( triage_raw_data )
+    logging.debug( pprint.pformat( triage_raw_data ) )
 
     # for dt in sorted( existing_events.keys() ):
     #     for typ, ev in current_events[dt].items():
