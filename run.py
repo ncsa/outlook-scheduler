@@ -138,7 +138,7 @@ def run():
     # triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
     triage_raw_data = {}
     for row in csv_data:
-        date = row[0]
+        date = dateutil.parser.parse(row[0])
         members = []
         emails = []
         for elem in row[1:]:
