@@ -91,6 +91,36 @@ def parse_csv_input():
         return triage_raw_data
 
 
+def create_triage_meetings( mtg_data ):
+    ''' Use mtg_data to create meetings iff they don't already exist
+        mtg_data = {
+            datetime: {
+                'emails': list of email addrs,
+                'members': Names of attendees,
+            }
+        )
+    '''
+    triage_start_date = min( mtg_data.keys() )
+    triage_end_date = max( mtg_data.keys() )
+    existing_events = get_existing_events(
+        start = triage_start_date,
+        end = triage_end_date,
+    )
+
+    for dt, data in mtg_data.items():
+        try:
+            # dt is a datetime, use just the date component to match existing event
+            ev = existing_events[dt.date()]['TRIAGE']
+        except KeyError:
+            ev = None
+        create_or_update_triage_event(
+            date = dt,
+            emails = data['emails'],
+            members = data['members'],
+            existing_event = ev
+        )
+
+
 def get_existing_events( start, end ):
     ''' px = PyExch instance, already logged in
         start = datetime.date OR datetime.datetime
@@ -105,7 +135,7 @@ def get_existing_events( start, end ):
         end = end + datetime.timedelta( seconds=86399 ),
     )
     # pprint.pprint( existing_events )
-    # pprint.pprint( [ (e.start, e.type, e.subject) for e in existing_events ] )
+    logging.debug( f'Existing events: { [ (e.start, e.type, e.subject) for e in existing_events ] }' )
     # create hash of event dates & types
     current_events = {}
     for e in existing_events:
@@ -117,14 +147,14 @@ def get_existing_events( start, end ):
 
 
 def create_or_update_triage_event( date, emails, members, existing_event:None):
-    ''' date = datetime.date for new event
+    ''' date = datetime for new event
         attendees = list of email addresses
         existing_event = raw exchange event
     '''
     if existing_event:
         #logging.info( f'Existing TRIAGE event {pprint.pprint(ev)}' )
         logging.info( f'Existing TRIAGE event for date "{date}"' )
-        logging.debug( f'Existing Event: {pprint.pformat(existing_event)}' )
+        logging.debug( f'Existing Event: {existing_event}' )
     else:
         px = get_pyexch()
         logging.info( f'Making new TRIAGE event for date "{date}"' )
@@ -138,7 +168,6 @@ def create_or_update_triage_event( date, emails, members, existing_event:None):
         )
 
 
-
 def run():
     # args= get_args()
     # pprint.pprint( ['ARGS', args] )
@@ -146,25 +175,7 @@ def run():
     triage_raw_data = parse_csv_input()
 
     # (1) create all triage meetings
-    triage_start_date = min( triage_raw_data.keys() )
-    triage_end_date = max( triage_raw_data.keys() )
-    existing_events = get_existing_events(
-        start = triage_start_date,
-        end = triage_end_date,
-    )
-
-    for dt, data in triage_raw_data.items():
-        try:
-            ev = existing_events[dt.date()]['TRIAGE']
-        except KeyError:
-            ev = None
-        create_or_update_triage_event(
-            date = dt,
-            emails = data['emails'],
-            members = data['members'],
-            existing_event = ev
-        )
-
+    create_triage_meetings( triage_raw_data )
 
     # (2) create / update SHIFTCHANGE events
     # Get all existing TRIAGE events
