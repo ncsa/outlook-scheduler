@@ -73,6 +73,24 @@ def get_triage_categories():
     return resources['triage_categories']
 
 
+def parse_csv_input():
+        args= get_args()
+        csv_data = csv.reader( args.infile, dialect='excel-tab' )
+        triage_raw_data = {}
+        for row in csv_data:
+            date = dateutil.parser.parse(row[0])
+            members = []
+            emails = []
+            for elem in row[1:]:
+                if '@' in elem:
+                    emails.append( elem )
+                else:
+                    members.append( elem )
+            triage_raw_data[date] = { 'emails': emails, 'members': members }
+        logging.debug( pprint.pformat( triage_raw_data ) )
+        return triage_raw_data
+
+
 def get_existing_events( start, end ):
     ''' px = PyExch instance, already logged in
         start = datetime.date OR datetime.datetime
@@ -91,19 +109,11 @@ def get_existing_events( start, end ):
     # create hash of event dates & types
     current_events = {}
     for e in existing_events:
-        #dt = datetime.date( e.start.year, e.start.month, e.start.day )
         dt = e.start.date()
         if dt not in current_events:
             current_events[dt] = {}
         current_events[dt][e.type] = e
     return current_events
-
-
-def next_business_day( date ):
-    ''' Return the next weekday
-    '''
-    # https://stackoverflow.com/questions/9187215/
-    return date + [1, 1, 1, 1, 3, 2, 1][date.weekday()]
 
 
 def create_or_update_triage_event( date, emails, members, existing_event:None):
@@ -130,30 +140,10 @@ def create_or_update_triage_event( date, emails, members, existing_event:None):
 
 
 def run():
-    args= get_args()
+    # args= get_args()
     # pprint.pprint( ['ARGS', args] )
 
-    # get CSV input
-    csv_data = csv.reader( args.infile, dialect='excel-tab' )
-    # triage_raw_data = { dateutil.parser.parse(row[0]):row[1:] for row in csv_data }
-    triage_raw_data = {}
-    for row in csv_data:
-        date = dateutil.parser.parse(row[0])
-        members = []
-        emails = []
-        for elem in row[1:]:
-            if '@' in elem:
-                emails.append( elem )
-            else:
-                members.append( elem )
-        triage_raw_data[date] = { 'emails': emails, 'members': members }
-    logging.debug( pprint.pformat( triage_raw_data ) )
-
-    # for dt in sorted( existing_events.keys() ):
-    #     for typ, ev in current_events[dt].items():
-    #         subj = ev.subject
-    #         members = [ x.mailbox.email_address for x in ev.raw_event.required_attendees ]
-    #         pprint.pprint( [ dt, typ, subj, members ] )
+    triage_raw_data = parse_csv_input()
 
     # (1) create all triage meetings
     triage_start_date = min( triage_raw_data.keys() )
@@ -162,22 +152,6 @@ def run():
         start = triage_start_date,
         end = triage_end_date,
     )
-
-    # triage_dates = [ k for k in triage_raw_data.keys() ]
-    # pprint.pprint( triage_dates )
-    # event_dates = [ k for k in existing_events.keys() ]
-    # pprint.pprint( event_dates )
-    # for i in range( len( triage_dates ) ):
-    #     td = triage_dates[i].date()
-    #     ed = event_dates[i]
-    #     if td == ed:
-    #         logging.info( f'EQUAL {td} == {ed}' )
-    #     elif td < ed:
-    #         logging.info( f'LESS {td} < {ed}' )
-    #     elif td > ed:
-    #         logging.info( f'GREATER {td} > {ed}' )
-
-    # raise SystemExit( 'forced exit' )
 
     for dt, data in triage_raw_data.items():
         try:
@@ -191,21 +165,13 @@ def run():
             existing_event = ev
         )
 
-    # # (2) create / update SHIFTCHANGE events
-    # existing_events = get_existing_events(
-    #     start = triage_start_date,
-    #     end = next_business_day( triage_end_date ),
-    # )
-    # for today in existing_events.keys():
-    #     # get members for today's triage team
-    #     triage_ev = existing_events[today]['TRIAGE']
-    #     attendees = [ x.mailbox.email_address for x in triage_ev.required_attendees ]
-    #     try:
-    #         shiftchange_ev = existing_events[dt]['SHIFTCHANGE']
-    #     except KeyError:
-    #         shiftchange_ev = None
-    #     create_or_update_shiftchange_event(
-    #         date=dt, attendees=attendees, existing_event=shiftchange_ev )
+
+    # (2) create / update SHIFTCHANGE events
+    # Get all existing TRIAGE events
+    # Extract attendees required_attendees=[ Attendee(), ...]
+    #   where Attendee( mailbox=Mailbox(), ...)
+    #   and where Mailbox( email_address='...', ...)
+    #   thus, emails=[ a.mailbox.email_address for a in required_attendees ]
 
 
 
