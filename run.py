@@ -160,7 +160,7 @@ def create_or_update_triage_event( date, emails, members, existing_event:None):
         logging.info( f'Making new TRIAGE event for date "{date}"' )
         px.new_all_day_event( 
             date = date, 
-            subject = f"Triage: {','.join(members)}",
+            subject = f"Triage: {', '.join(members)}",
             attendees = emails,
             location = get_triage_location(),
             categories = get_triage_categories(),
