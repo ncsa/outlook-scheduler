@@ -107,6 +107,8 @@ def create_triage_meetings( mtg_data ):
         end = triage_end_date,
     )
 
+    raise SystemExit( 'forced exit')
+
     for dt, data in mtg_data.items():
         try:
             # dt is a datetime, use just the date component to match existing event
@@ -175,7 +177,6 @@ def run():
     triage_raw_data = parse_csv_input()
 
 
-    raise SystemExit( 'forced exit')
 
     # (1) create all triage meetings
     create_triage_meetings( triage_raw_data )
