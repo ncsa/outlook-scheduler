@@ -174,6 +174,9 @@ def run():
 
     triage_raw_data = parse_csv_input()
 
+
+    raise SystemExit( 'forced exit')
+
     # (1) create all triage meetings
     create_triage_meetings( triage_raw_data )
 
