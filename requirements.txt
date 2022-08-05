@@ -1,6 +1,7 @@
 exchangelib
 tzlocal
 python-dateutil
+oauthlib
 #git+https://github.com/andylytical/pyexch
 #git+https://github.com/andylytical/pyexch@write_events
 git+https://github.com/andylytical/pyexch@triage_updates
