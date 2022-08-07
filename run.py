@@ -107,8 +107,6 @@ def create_triage_meetings( mtg_data ):
         end = triage_end_date,
     )
 
-    raise SystemExit( 'forced exit')
-
     for dt, data in mtg_data.items():
         try:
             # dt is a datetime, use just the date component to match existing event
@@ -160,14 +158,14 @@ def create_or_update_triage_event( date, emails, members, existing_event:None):
     else:
         px = get_pyexch()
         logging.info( f'Making new TRIAGE event for date "{date}"' )
-        px.new_all_day_event( 
-            date = date, 
-            subject = f"Triage: {', '.join(members)}",
-            attendees = emails,
-            location = get_triage_location(),
-            categories = get_triage_categories(),
-            free = True
-        )
+        # px.new_all_day_event( 
+        #     date = date, 
+        #     subject = f"Triage: {', '.join(members)}",
+        #     attendees = emails,
+        #     location = get_triage_location(),
+        #     categories = get_triage_categories(),
+        #     free = True
+        # )
 
 
 def run():
