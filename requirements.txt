@@ -1,6 +1,7 @@
 exchangelib
-tzlocal
-python-dateutil
 oauthlib
+python-dateutil
+pyyaml
+tzlocal
 #git+https://github.com/andylytical/pyexch
 git+https://github.com/andylytical/pyexch@triage_updates
