@@ -6,8 +6,6 @@ import csv
 import datetime
 import dateutil.parser
 import logging
-import netrc
-import os
 import pprint
 import pyexch.pyexch
 
@@ -21,22 +19,11 @@ def get_args():
             'description': 'triage duty scheduler',
             'epilog': '''
     Program is controlled using the following environment variables:
-        NETRC
-            path to netrc file (default: ~/.netrc)
-            where netrc file has a key named "EXCH"
-            and the "EXCH" key has values for:
-            "login" in format username@illinois.edu
-            "password",
-            "account" in format username@illinois.edu
-            NOTE that account can be different than login,
-            which is how to access a shared calendar.
     '''
         }
         parser = argparse.ArgumentParser()
         parser.add_argument( '-d', '--debug', action='store_true' )
         parser.add_argument( '-f', '--infile', type=argparse.FileType() )
-        # parser.add_argument( '-k', '--netrckey',
-        #     help='key in netrc to use for login,passwd; default=%(default)s' )
         defaults = {
             'debug': False,
             'infile': '-',
