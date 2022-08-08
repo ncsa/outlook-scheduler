@@ -100,13 +100,14 @@ def create_triage_meetings( mtg_data ):
             }
         )
     '''
+    # get existing events
     triage_start_date = min( mtg_data.keys() )
     triage_end_date = max( mtg_data.keys() )
     existing_events = get_existing_events(
         start = triage_start_date,
         end = triage_end_date,
     )
-
+    # try to create events for dates from csv
     for dt, data in mtg_data.items():
         try:
             # dt is a datetime, use just the date component to match existing event
@@ -158,14 +159,14 @@ def create_or_update_triage_event( date, emails, members, existing_event:None):
     else:
         px = get_pyexch()
         logging.info( f'Making new TRIAGE event for date "{date}"' )
-        # px.new_all_day_event( 
-        #     date = date, 
-        #     subject = f"Triage: {', '.join(members)}",
-        #     attendees = emails,
-        #     location = get_triage_location(),
-        #     categories = get_triage_categories(),
-        #     free = True
-        # )
+        px.new_all_day_event( 
+            date = date, 
+            subject = f"Triage: {', '.join(members)}",
+            attendees = emails,
+            location = get_triage_location(),
+            categories = get_triage_categories(),
+            free = True
+        )
 
 
 def run():
