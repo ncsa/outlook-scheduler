@@ -1,7 +1,0 @@
-exchangelib
-oauthlib
-python-dateutil
-pyyaml
-tzlocal
-#git+https://github.com/andylytical/pyexch
-git+https://github.com/andylytical/pyexch@triage_updates
